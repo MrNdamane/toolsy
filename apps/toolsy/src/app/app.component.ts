@@ -9,12 +9,8 @@ import { first, map } from 'rxjs/operators';
 @Component({
   selector: 'toolsy-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-
-  constructor() {
-
-  }
-
+  constructor() {}
 }

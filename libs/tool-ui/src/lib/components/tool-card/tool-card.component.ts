@@ -3,10 +3,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 @Component({
   selector: 'tly-tool-card',
   templateUrl: './tool-card.component.html',
-  styleUrls: ['./tool-card.component.scss']
+  styleUrls: ['./tool-card.component.scss'],
 })
 export class ToolCardComponent implements OnInit {
-
   @Input() title: string;
   @Input() imageUrl: string;
   @Input() description: string;
@@ -14,13 +13,11 @@ export class ToolCardComponent implements OnInit {
 
   @Output() viewHandle = new EventEmitter<boolean>();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   viewClicked() {
     this.viewHandle.emit(true);
   }
-
 }

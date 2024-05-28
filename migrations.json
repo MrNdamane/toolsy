@@ -1,25 +1,39 @@
 {
   "migrations": [
     {
-      "version": "12.0.0-beta",
-      "description": "In Angular version 12, the type of ActivatedRouteSnapshot.fragment is nullable. This migration automatically adds non-null assertions to it.",
-      "factory": "./migrations/activated-route-snapshot-fragment/index",
-      "package": "@angular/core",
-      "name": "migration-v12-activated-route-snapshot-fragment"
+      "version": "13.0.0",
+      "factory": "./update-13/schematic-options",
+      "description": "Remove no longer valid Angular schematic options from `angular.json`.",
+      "package": "@angular/cli",
+      "name": "schematic-options-13"
     },
     {
-      "version": "12.0.0-next.6",
-      "description": "`XhrFactory` has been moved from `@angular/common/http` to `@angular/common`.",
-      "factory": "./migrations/xhr-factory/index",
-      "package": "@angular/core",
-      "name": "migration-v12-xhr-factory"
+      "version": "13.0.0",
+      "factory": "./update-13/update-angular-config",
+      "description": "Remove deprecated options from 'angular.json' that are no longer present in v13.",
+      "package": "@angular/cli",
+      "name": "update-angular-config-v13"
     },
     {
-      "version": "12.0.2",
-      "description": "Automatically migrates shadow-piercing selector from `/deep/` to the recommended alternative `::ng-deep`.",
-      "factory": "./migrations/deep-shadow-piercing-selector/index",
-      "package": "@angular/core",
-      "name": "migration-v12-deep-shadow-piercing-selector"
+      "version": "13.0.0",
+      "factory": "./update-13/update-libraries",
+      "description": "Update library projects to be published in partial mode and removed deprecated options from ng-packagr configuration.",
+      "package": "@angular/cli",
+      "name": "update-libraries-v13"
+    },
+    {
+      "version": "13.0.0",
+      "factory": "./update-13/drop-ie-polyfills",
+      "description": "Remove polyfills required only for Internet Explorer which is no longer supported.",
+      "package": "@angular/cli",
+      "name": "drop-ie-polyfills"
+    },
+    {
+      "version": "13.0.0",
+      "factory": "./update-13/update-gitignore",
+      "description": "Updating '.gitignore' to include '.angular/cache'.",
+      "package": "@angular/cli",
+      "name": "update-gitignore"
     }
   ]
 }

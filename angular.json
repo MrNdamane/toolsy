@@ -1,6 +1,116 @@
 {
   "version": 1,
   "projects": {
+    "models": {
+      "root": "libs/models",
+      "sourceRoot": "libs/models/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/models/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "tool-overlay": {
+      "projectType": "library",
+      "root": "libs/tool-overlay",
+      "sourceRoot": "libs/tool-overlay/src",
+      "prefix": "tly",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/tool-overlay/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "tags": []
+    },
+    "tool-ui": {
+      "projectType": "library",
+      "root": "libs/tool-ui",
+      "sourceRoot": "libs/tool-ui/src",
+      "prefix": "tly",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/tool-ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "storybook": {
+          "builder": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "port": 4400,
+            "config": {
+              "configFolder": "libs/tool-ui/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "builder": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "outputPath": "dist/storybook/tool-ui",
+            "config": {
+              "configFolder": "libs/tool-ui/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "tags": []
+    },
+    "tool-ui-e2e": {
+      "root": "apps/tool-ui-e2e",
+      "sourceRoot": "apps/tool-ui-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/tool-ui-e2e/cypress.json",
+            "tsConfig": "apps/tool-ui-e2e/tsconfig.e2e.json",
+            "devServerTarget": "tool-ui:storybook"
+          },
+          "configurations": {
+            "ci": {
+              "devServerTarget": "tool-ui:storybook:ci"
+            }
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": ["tool-ui"]
+    },
     "toolsy": {
       "projectType": "application",
       "schematics": {
@@ -21,10 +131,7 @@
             "polyfills": "apps/toolsy/src/polyfills.ts",
             "tsConfig": "apps/toolsy/tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "apps/toolsy/src/favicon.ico",
-              "apps/toolsy/src/assets"
-            ],
+            "assets": ["apps/toolsy/src/favicon.ico", "apps/toolsy/src/assets"],
             "styles": [
               "apps/toolsy/src/styles.scss",
               "apps/toolsy/src/tailwind/tailwind.scss"
@@ -82,19 +189,6 @@
             "browserTarget": "toolsy:build"
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/toolsy/tsconfig.app.json",
-              "apps/toolsy/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/toolsy/**/*"
-            ]
-          }
-        },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
@@ -106,7 +200,8 @@
           "builder": "@angular/fire:deploy",
           "options": {}
         }
-      }
+      },
+      "tags": []
     },
     "toolsy-e2e": {
       "root": "apps/toolsy-e2e",
@@ -125,224 +220,10 @@
               "devServerTarget": "toolsy:serve:production"
             }
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/toolsy-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/toolsy-e2e/**/*"
-            ]
-          }
-        }
-      }
-    },
-    "tool-ui": {
-      "projectType": "library",
-      "root": "libs/tool-ui",
-      "sourceRoot": "libs/tool-ui/src",
-      "prefix": "tly",
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/tool-ui/tsconfig.lib.json",
-              "libs/tool-ui/tsconfig.spec.json",
-              "libs/tool-ui/.storybook/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/tool-ui/**/*"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/tool-ui/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "storybook": {
-          "builder": "@nrwl/storybook:storybook",
-          "options": {
-            "uiFramework": "@storybook/angular",
-            "port": 4400,
-            "config": {
-              "configFolder": "libs/tool-ui/.storybook"
-            }
-          },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          }
-        },
-        "build-storybook": {
-          "builder": "@nrwl/storybook:build",
-          "options": {
-            "uiFramework": "@storybook/angular",
-            "outputPath": "dist/storybook/tool-ui",
-            "config": {
-              "configFolder": "libs/tool-ui/.storybook"
-            }
-          },
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          }
         }
       },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "tool-ui-e2e": {
-      "root": "apps/tool-ui-e2e",
-      "sourceRoot": "apps/tool-ui-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/tool-ui-e2e/cypress.json",
-            "tsConfig": "apps/tool-ui-e2e/tsconfig.e2e.json",
-            "devServerTarget": "tool-ui:storybook"
-          },
-          "configurations": {
-            "ci": {
-              "devServerTarget": "tool-ui:storybook:ci"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/tool-ui-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/tool-ui-e2e/**/*"
-            ]
-          }
-        }
-      }
-    },
-    "tool-overlay": {
-      "projectType": "library",
-      "root": "libs/tool-overlay",
-      "sourceRoot": "libs/tool-overlay/src",
-      "prefix": "tly",
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/tool-overlay/tsconfig.lib.json",
-              "libs/tool-overlay/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/tool-overlay/**/*"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/tool-overlay/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "models": {
-      "root": "libs/models",
-      "sourceRoot": "libs/models/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/models/tsconfig.lib.json",
-              "libs/models/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/models/**/*"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/models/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
+      "tags": [],
+      "implicitDependencies": ["toolsy"]
     }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
-  "schematics": {
-    "@nrwl/workspace": {
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/cypress": {
-      "cypress-project": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/node": {
-      "application": {
-        "linter": "tslint"
-      },
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/nest": {
-      "application": {
-        "linter": "tslint"
-      },
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/express": {
-      "application": {
-        "linter": "tslint"
-      },
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
-    }
-  },
-  "defaultProject": "toolsy"
+  }
 }

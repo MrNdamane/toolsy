@@ -9,5 +9,4 @@ import { TruncateModule } from '@yellowspot/ng-truncate';
   declarations: [ToolCardComponent, ToolDialogUiComponent],
   exports: [ToolCardComponent, ToolDialogUiComponent],
 })
-export class ToolUiModule {
-}
+export class ToolUiModule {}

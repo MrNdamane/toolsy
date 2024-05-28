@@ -14,15 +14,34 @@ import { AppRoutingModule } from './app-routing.module';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { ToolDialogComponent } from './components/tool-dialog/tool-dialog.component';
-import { OverlayscrollbarsModule } from "overlayscrollbars-ngx";
+import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
 import { IntersectionObserverModule } from '@ng-web-apis/intersection-observer';
 import { ContentLoaderModule } from '@ngneat/content-loader';
 
-
 @NgModule({
-  declarations: [AppComponent, SearchResultsComponent, HomeComponent, CategoriesComponent, LogoComponent, ToolDialogComponent],
-  imports: [CommonModule, BrowserModule, ReactiveFormsModule, FormsModule, AppRoutingModule, IntersectionObserverModule, ToolUiModule, ToolOverlayModule.forRoot(), AngularFireModule.initializeApp(environment.firebase), AngularFirestoreModule, OverlayscrollbarsModule, ContentLoaderModule],
+  declarations: [
+    AppComponent,
+    SearchResultsComponent,
+    HomeComponent,
+    CategoriesComponent,
+    LogoComponent,
+    ToolDialogComponent,
+  ],
+  imports: [
+    CommonModule,
+    BrowserModule,
+    ReactiveFormsModule,
+    FormsModule,
+    AppRoutingModule,
+    IntersectionObserverModule,
+    ToolUiModule,
+    ToolOverlayModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    OverlayscrollbarsModule,
+    ContentLoaderModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

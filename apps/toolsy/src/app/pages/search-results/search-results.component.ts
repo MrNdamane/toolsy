@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ITool } from '@toolsy/models';
@@ -6,14 +12,14 @@ import { ToolsyOverlayRef, ToolsyOverlayService } from '@toolsy/tool-overlay';
 import { Observable } from 'rxjs';
 import algolia from 'algoliasearch/lite';
 import { environment } from '../../../environments/environment';
-import { OverlayScrollbarsComponent } from "overlayscrollbars-ngx";
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-ngx';
 
 const client = algolia(environment.algolia.appID, environment.algolia.apiKey);
 
 @Component({
   selector: 'toolsy-search-results',
   templateUrl: './search-results.component.html',
-  styleUrls: ['./search-results.component.scss']
+  styleUrls: ['./search-results.component.scss'],
 })
 export class SearchResultsComponent implements OnInit {
   search: string;
@@ -28,19 +34,23 @@ export class SearchResultsComponent implements OnInit {
   category: string;
   toolsLoading = new Array<number>(12);
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private toolsyOverlay: ToolsyOverlayService, private firestore: AngularFirestore) {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private toolsyOverlay: ToolsyOverlayService,
+    private firestore: AngularFirestore
+  ) {
     this.search = this.activatedRoute.snapshot.params.id;
   }
 
   ngOnInit() {
-    this.handleSearch(this.search)
+    this.handleSearch(this.search);
   }
 
   onCategory(category: string) {
     this.category = category;
     this.hits = this.toggleTags(category, this.tags);
   }
-
 
   open(content: TemplateRef<any>) {
     this.ref = this.toolsyOverlay.open(content, null, {
@@ -50,15 +60,12 @@ export class SearchResultsComponent implements OnInit {
       minHeight: '100vh',
       minWidth: '100vw',
       maxWidth: '100vw',
-      panelClass: [
-
-      ],
+      panelClass: [],
       backdropClass: 'bg-backdrop',
-      positionStrategy: 'center'
+      positionStrategy: 'center',
     });
 
-    this.ref.afterClosed$.subscribe(res => { });
-
+    this.ref.afterClosed$.subscribe((res) => {});
   }
 
   selected(tool: ITool) {
@@ -66,32 +73,31 @@ export class SearchResultsComponent implements OnInit {
   }
 
   async handleSearch(query: string) {
-
     this.hits = undefined;
     this.query = query;
     this.results = await this.index.search(query);
 
-    this.router.navigate(['../search', query])
+    this.router.navigate(['../search', query]);
 
     // store tools in temp
     this.toolsTemp = this.results.hits as ITool[];
 
-    console.log(this.tags.length)
+    console.log(this.tags.length);
     // filter tools by tags
-    this.hits = this.category ? this.toggleTags(this.category, this.tags) : this.toolsTemp;
+    this.hits = this.category
+      ? this.toggleTags(this.category, this.tags)
+      : this.toolsTemp;
   }
 
   toggleTags(category: string, tags: string[]) {
-    const tools = this.toolsTemp.filter(tool => {
+    const tools = this.toolsTemp.filter((tool) => {
       return tool.categories.indexOf(category) > -1;
       // &&
       //   tool.tags.filter(tag =>
       //     tags.indexOf(tag) > -1
       //   ).length > 0
-    }
-    )
+    });
 
     return tools;
   }
-
 }

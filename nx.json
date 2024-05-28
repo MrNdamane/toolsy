@@ -27,26 +27,52 @@
       }
     }
   },
-  "projects": {
-    "toolsy": {
-      "tags": []
+  "nxCloudAccessToken": "MzA2ZTJlZWUtMDYxNy00YmU4LWI2Y2UtNDhmZDlhYWM5NjU3fHJlYWQtd3JpdGU=",
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "toolsy",
+  "generators": {
+    "@nrwl/workspace": {
+      "library": {
+        "linter": "tslint"
+      }
     },
-    "toolsy-e2e": {
-      "tags": [],
-      "implicitDependencies": ["toolsy"]
+    "@nrwl/cypress": {
+      "cypress-project": {
+        "linter": "tslint"
+      }
     },
-    "tool-ui": {
-      "tags": []
+    "@nrwl/node": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
     },
-    "tool-ui-e2e": {
-      "tags": [],
-      "implicitDependencies": ["tool-ui"]
+    "@nrwl/nest": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
     },
-    "tool-overlay": {
-      "tags": []
+    "@nrwl/express": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
     },
-    "models": {
-      "tags": []
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
     }
   }
 }
