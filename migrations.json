@@ -1,39 +1,25 @@
 {
   "migrations": [
     {
-      "version": "13.0.0",
-      "factory": "./update-13/schematic-options",
-      "description": "Remove no longer valid Angular schematic options from `angular.json`.",
-      "package": "@angular/cli",
-      "name": "schematic-options-13"
+      "version": "14.0.0-beta",
+      "description": "As of Angular version 13, `entryComponents` are no longer necessary.",
+      "factory": "./migrations/entry-components/index",
+      "package": "@angular/core",
+      "name": "migration-entry-components"
     },
     {
-      "version": "13.0.0",
-      "factory": "./update-13/update-angular-config",
-      "description": "Remove deprecated options from 'angular.json' that are no longer present in v13.",
-      "package": "@angular/cli",
-      "name": "update-angular-config-v13"
+      "version": "14.0.0-beta",
+      "description": "As of Angular version 14, Forms model classes accept a type parameter, and existing usages must be opted out to preserve backwards-compatibility.",
+      "factory": "./migrations/typed-forms/index",
+      "package": "@angular/core",
+      "name": "migration-v14-typed-forms"
     },
     {
-      "version": "13.0.0",
-      "factory": "./update-13/update-libraries",
-      "description": "Update library projects to be published in partial mode and removed deprecated options from ng-packagr configuration.",
-      "package": "@angular/cli",
-      "name": "update-libraries-v13"
-    },
-    {
-      "version": "13.0.0",
-      "factory": "./update-13/drop-ie-polyfills",
-      "description": "Remove polyfills required only for Internet Explorer which is no longer supported.",
-      "package": "@angular/cli",
-      "name": "drop-ie-polyfills"
-    },
-    {
-      "version": "13.0.0",
-      "factory": "./update-13/update-gitignore",
-      "description": "Updating '.gitignore' to include '.angular/cache'.",
-      "package": "@angular/cli",
-      "name": "update-gitignore"
+      "version": "14.0.0-beta",
+      "description": "In Angular version 14, the `pathMatch` property of `Routes` was updated to be a strict union of the two valid options: `'full'|'prefix'`. `Routes` and `Route` variables need an explicit type so TypeScript does not infer the property as the looser `string`.",
+      "factory": "./migrations/path-match-type/index",
+      "package": "@angular/core",
+      "name": "migration-v14-path-match-type"
     }
   ]
 }
