@@ -8,7 +8,7 @@ import { filter, first } from 'rxjs/operators';
 @Component({
   selector: 'toolsy-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
   scrolledUp = false;
@@ -18,26 +18,32 @@ export class HomeComponent implements OnInit {
   toolsTemp: ITool[];
   toolsLoading = new Array<number>(12);
 
-  constructor(private toolsyOverlay: ToolsyOverlayService, private firestore: AngularFirestore, private router: Router) {
-
-  }
+  constructor(
+    private toolsyOverlay: ToolsyOverlayService,
+    private firestore: AngularFirestore,
+    private router: Router
+  ) {}
 
   goToSearch(search: string) {
     this.router.navigate(['/search', search]);
   }
 
   ngOnInit() {
-    this.getCategories()
+    this.getCategories();
   }
 
   onCategory(name: string) {
-    this.tools = this.toolsTemp.filter(tool => {
-      return tool.categories.findIndex(category => category === name) > -1
-    })
+    this.tools = this.toolsTemp.filter((tool) => {
+      return tool.categories.findIndex((category) => category === name) > -1;
+    });
   }
 
   async getCategories() {
-    this.tools = this.toolsTemp = await this.firestore.collection<ITool>('tools').valueChanges().pipe(first()).toPromise();
+    this.tools = this.toolsTemp = await this.firestore
+      .collection<ITool>('tools')
+      .valueChanges()
+      .pipe(first())
+      .toPromise();
   }
 
   open(content: TemplateRef<any>) {
@@ -47,18 +53,15 @@ export class HomeComponent implements OnInit {
       minHeight: '100vh',
       minWidth: '100vw',
       maxWidth: '100vw',
-      panelClass: [
-        'overflow-y-auto'
-      ],
+      panelClass: ['overflow-y-auto'],
       backdropClass: 'bg-backdrop',
-      positionStrategy: 'center'
+      positionStrategy: 'center',
     });
 
-    this.ref.afterClosed$.subscribe(() => { });
+    this.ref.afterClosed$.subscribe(() => {});
   }
 
   selected(tool: ITool) {
     this.tool = tool;
   }
-
 }

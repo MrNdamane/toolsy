@@ -9,37 +9,45 @@ import { map, first } from 'rxjs/operators';
 @Component({
   selector: 'toolsy-categories',
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss']
+  styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements OnInit {
-  @Output() handleCategory = new EventEmitter<string>()
-  @Output() handleTags = new EventEmitter<string[]>()
+  @Output() handleCategory = new EventEmitter<string>();
+  @Output() handleTags = new EventEmitter<string[]>();
   categories$: Observable<ICategory[]>;
   categoryForm: FormGroup;
   Categories: ICategory[];
 
-  constructor(private firestore: AngularFirestore, private fb: FormBuilder, private router: Router) {
-
-  }
+  constructor(
+    private firestore: AngularFirestore,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-
     // Gets Categories
     this.getCategories();
 
     this.categoryForm = this.fb.group({
-      category: [[]]
-    })
+      category: [[]],
+    });
   }
 
   async getCategories() {
-    this.Categories = await this.firestore.collection<ICategory>('categories').snapshotChanges().pipe(map(actions =>
-      actions.map(a => {
-        const data = a.payload.doc.data();
-        data.id = a.payload.doc.id;
-        return data;
-      })
-    ), first()).toPromise();
+    this.Categories = await this.firestore
+      .collection<ICategory>('categories')
+      .snapshotChanges()
+      .pipe(
+        map((actions) =>
+          actions.map((a) => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          })
+        ),
+        first()
+      )
+      .toPromise();
   }
 
   get category() {
@@ -47,10 +55,12 @@ export class CategoriesComponent implements OnInit {
   }
 
   getTags(id: string) {
-    return this.Categories.find(category => category.id === id)
+    return this.Categories.find((category) => category.id === id);
   }
 
   categorySelected(id: string) {
-    this.handleCategory.emit(this.Categories.find(category => category.id === id).name.toLowerCase())
+    this.handleCategory.emit(
+      this.Categories.find((category) => category.id === id).name.toLowerCase()
+    );
   }
 }

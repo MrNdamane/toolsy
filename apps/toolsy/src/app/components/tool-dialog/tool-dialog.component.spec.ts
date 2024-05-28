@@ -8,9 +8,8 @@ describe('ToolDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ToolDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [ToolDialogComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

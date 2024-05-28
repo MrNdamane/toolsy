@@ -15,9 +15,8 @@ module.exports = (isProd) => ({
         dialog: '#F2F2F2',
         tag: '#eff3f6',
       },
-    }
+    },
   },
-  variants: {
-  },
+  variants: {},
   plugins: [],
 });
