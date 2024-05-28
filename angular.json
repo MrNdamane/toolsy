@@ -125,6 +125,10 @@
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "algoliasearch/lite",
+              "overlayscrollbars"
+           ],
             "outputPath": "dist/apps/toolsy",
             "index": "apps/toolsy/src/index.html",
             "main": "apps/toolsy/src/main.ts",
@@ -225,5 +229,8 @@
       "tags": [],
       "implicitDependencies": ["toolsy"]
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
